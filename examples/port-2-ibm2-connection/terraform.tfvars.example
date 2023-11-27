@@ -1,0 +1,19 @@
+equinix_client_id      = "MyEquinixClientId"
+equinix_client_secret  = "MyEquinixClientSecret"
+
+connection_name             = "Port2IBM2"
+connection_type             = "EVPL_VC"
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com"]
+bandwidth                   = 50
+purchase_order_number       = "1-323292"
+aside_port_name             = "sit-001-200009-CX-TY4-NL-Qinq-STD-10G-PRI-JP-252"
+aside_vlan_tag              = "3202"
+aside_vlan_inner_tag        = "3195"
+zside_ap_type               = "SP"
+zside_ap_authentication_key = "<IBM Auth Key>"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SV"
+zside_sp_name               = "IBM Cloud Direct Link 2"
+zside_seller_region         = "San Jose 2"
+additional_info             = [{ key = "ASN", value = "14353" }]
