@@ -1,0 +1,19 @@
+equinix_client_id      = "<MyEquinixClientId>"
+equinix_client_secret  = "<MyEquinixSecret>"
+
+notifications_type          = "ALL"
+notifications_emails        = ["example@equinix.com","test1@equinix.com"]
+purchase_order_number       = "1-323292"
+aside_fcr_uuid              = "<Fabric Cloud Router UUID>"
+connection_name             = "fcr_2_aws"
+connection_type             = "IP_VC"
+bandwidth                   = 50
+aside_ap_type               = "CLOUD_ROUTER"
+zside_ap_type               = "SP"
+zside_ap_authentication_key = "<AWS Account Id>"
+zside_ap_profile_type       = "L2_PROFILE"
+zside_location              = "SV"
+zside_seller_region         = "us-west-1"
+zside_fabric_sp_name        = "AWS Direct Connect"
+aws_access_key                  = "<AWS Client Access Key>"
+aws_secret_key                  = "<AWS Client Secret Key>"
