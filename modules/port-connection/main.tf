@@ -34,13 +34,14 @@ resource "equinix_fabric_connection" "primary_port_connection" {
     type   = var.notifications_type
     emails = var.notifications_emails
   }
+
   bandwidth = var.bandwidth
   redundancy { priority = "PRIMARY" }
   order {
-    purchase_order_number = var.purchase_order_number
+    purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
   }
 
-  additional_info = var.primary_additional_info != [] ? var.primary_additional_info : null
+  additional_info = var.additional_info != [] ? var.additional_info : null
 
   a_side {
     access_point {
@@ -116,10 +117,10 @@ resource "equinix_fabric_connection" "secondary_port_connection" {
     group    = one(equinix_fabric_connection.primary_port_connection.redundancy).group
   }
   order {
-    purchase_order_number = var.purchase_order_number
+    purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
   }
 
-  additional_info = var.secondary_additional_info != [] ? var.secondary_additional_info : null
+  additional_info = var.additional_info != [] ? var.additional_info : null
 
   a_side {
     access_point {

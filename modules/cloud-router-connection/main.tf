@@ -18,14 +18,14 @@ resource "equinix_fabric_connection" "primary_cloud_router_connection" {
   name = var.connection_name
   type = var.connection_type
   notifications {
-    type   = var.notifications_type
+    type   = var.notifications_emails
     emails = var.notifications_emails
   }
   additional_info = var.additional_info != [] ? var.additional_info : null
   bandwidth       = var.bandwidth
   redundancy { priority = "PRIMARY" }
   order {
-    purchase_order_number = var.purchase_order_number
+    purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
   }
   a_side {
     access_point {
@@ -94,7 +94,7 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
   name  = var.secondary_connection_name
   type  = var.connection_type
   notifications {
-    type   = var.notifications_type
+    type   = var.notifications_emails
     emails = var.notifications_emails
   }
   additional_info = var.additional_info != [] ? var.additional_info : null
@@ -104,7 +104,7 @@ resource "equinix_fabric_connection" "secondary_cloud_router_connection" {
     group    = one(equinix_fabric_connection.primary_cloud_router_connection.redundancy).group
   }
   order {
-    purchase_order_number = var.purchase_order_number
+    purchase_order_number = var.purchase_order_number != "" ? var.purchase_order_number : null
   }
   a_side {
     access_point {
