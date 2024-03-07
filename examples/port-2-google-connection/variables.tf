@@ -6,7 +6,56 @@ variable "equinix_client_secret" {
   description = "Equinix client secret ID (consumer secret), obtained after registering app in the developer platform"
   type        = string
 }
-
+#Google Provider
+variable "google_region" {
+  description = "The Google region to manage resources in"
+  type        = string
+}
+variable "google_project_id" {
+  description = "The default Google Project Id to manage resources in"
+  type        = string
+}
+variable "google_zone" {
+  description = "The default Google Zone to manage resources in"
+  type        = string
+}
+variable "google_credentials_path" {
+  description = "Path to the contents of a service account key file in JSON format"
+  type        = string
+}
+variable "google_network_name" {
+  description = "The Google Network Name"
+  type        = string
+}
+variable "google_network_mtu" {
+  description = "The Google Network Maximum Transmission Unit in bytes"
+  type        = string
+}
+variable "google_network_auto_create_subnetwork" {
+  description = "When set to true, the network is created in auto subnet mode"
+  type        = bool
+}
+variable "google_router_name" {
+  description = "The Google Router Name"
+  type        = string
+}
+variable "google_router_bgp_asn" {
+  description = "The Google Router Local BGP Autonomous System Number (ASN)"
+  type        = string
+}
+variable "google_interconnect_name" {
+  description = "The Google Interconnect Name"
+  type        = string
+}
+variable "google_interconnect_type" {
+  description = "The Google Interconnect Type"
+  type        = string
+}
+variable "google_interconnect_edge_availability_domain" {
+  description = "The Google Interconnect Edge Availability Domain"
+  type        = string
+}
+#Fabric Connection
 variable "connection_name" {
   description = "Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores"
   type        = string
@@ -33,12 +82,10 @@ variable "purchase_order_number" {
   type        = string
   default     = ""
 }
-
 variable "aside_port_name" {
   description = "Equinix A-Side Port Name"
   type        = string
 }
-
 variable "aside_vlan_tag" {
   description = "Vlan Tag information, outer vlanSTag for QINQ connections"
   type        = string
@@ -52,10 +99,6 @@ variable "zside_ap_type" {
   description = "Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW"
   type        = string
 }
-variable "zside_ap_authentication_key" {
-  description = "Authentication key for provider based connections"
-  type        = string
-}
 variable "zside_ap_profile_type" {
   description = "Service profile type - L2_PROFILE, L3_PROFILE, ECIA_PROFILE, ECMC_PROFILE"
   type        = string
@@ -66,9 +109,5 @@ variable "zside_location" {
 }
 variable "zside_sp_name" {
   description = "Equinix Service Profile Name"
-  type        = string
-}
-variable "zside_seller_region" {
-  description = "Access point seller region"
   type        = string
 }
