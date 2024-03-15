@@ -68,6 +68,15 @@ additional_info = [
   { key = "accessKey", value = "<aws_access_key>" },
   { key = "secretKey", value = "<aws_secret_key>" }
 ]
+
+aws_gateway_name         = "aws_gateway"
+aws_gateway_asn          = 64518
+aws_vif_name             = "port2aws"
+aws_vif_address_family   = "ipv4"
+aws_vif_bgp_asn          = 64999
+aws_vif_amazon_address   = "169.254.0.1/30"
+aws_vif_customer_address = "169.254.0.2/30"
+aws_vif_bgp_auth_key     = "secret"
 ```
 versions.tf:
 ```hcl
@@ -77,7 +86,11 @@ terraform {
   required_providers {
     equinix = {
       source  = "equinix/equinix"
-      version = ">= 1.20.0"
+      version = ">= 1.25.1"
+    }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
     }
   }
 }
@@ -177,6 +190,41 @@ variable "additional_info" {
   type        = list(object({ key = string, value = string }))
   default     = []
 }
+variable "aws_gateway_name" {
+  description = "The name of the Gateway"
+  type        = string
+}
+variable "aws_gateway_asn" {
+  description = "The ASN to be configured on the Amazon side of the connection. The ASN must be in the private range of 64,512 to 65,534 or 4,200,000,000 to 4,294,967,294"
+  type        = number
+}
+variable "aws_vif_name" {
+  description = "The name for the virtual interface"
+  type        = string
+}
+variable "aws_vif_address_family" {
+  description = "The address family for the BGP peer. ipv4 or ipv6"
+  type        = string
+}
+variable "aws_vif_bgp_asn" {
+  description = "The autonomous system (AS) number for Border Gateway Protocol (BGP) configuration"
+  type        = number
+}
+variable "aws_vif_amazon_address" {
+  description = "The IPv4 CIDR address to use to send traffic to Amazon. Required for IPv4 BGP peers"
+  type        = string
+  default     = ""
+}
+variable "aws_vif_customer_address" {
+  description = "The IPv4 CIDR destination address to which Amazon should send traffic. Required for IPv4 BGP peers"
+  type        = string
+  default     = ""
+}
+variable "aws_vif_bgp_auth_key" {
+  description = "The authentication key for BGP configuration"
+  type        =  string
+  default     = ""
+}
 ```
 outputs.tf:
 ```hcl
@@ -184,9 +232,14 @@ outputs.tf:
 output "metal-connection" {
   value = equinix_metal_connection.metal-connection.id
 }
-
 output "fabric-connection" {
   value = module.metal-2-fabric-connection.primary_connection_id
+}
+output "aws_dx_gateway_id" {
+  value = aws_dx_gateway.aws_gateway.id
+}
+output "aws_interface_id" {
+  value = aws_dx_private_virtual_interface.aws_virtual_interface.id
 }
 ```
 main.tf:
@@ -195,7 +248,12 @@ main.tf:
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
-  auth_token    = var.metal_auth_token // added
+  auth_token    = var.metal_auth_token
+}
+provider "aws" {
+  access_key = var.additional_info[0]["value"]
+  secret_key = var.additional_info[1]["value"]
+  region     = var.zside_seller_region
 }
 resource "random_string" "random" {
   length  = 3
@@ -261,6 +319,36 @@ module "metal-2-fabric-connection" {
   zside_location              = var.zside_location
   zside_seller_region         = var.zside_seller_region
   zside_sp_name               = var.zside_sp_name
+}
+data "aws_dx_connection" "aws_connection" {
+  depends_on = [
+    module.metal-2-fabric-connection
+  ]
+  name = var.connection_name
+}
+
+resource "aws_dx_gateway" "aws_gateway" {
+  depends_on = [
+    module.metal-2-fabric-connection
+  ]
+  name            = var.aws_gateway_name
+  amazon_side_asn = var.aws_gateway_asn
+}
+
+resource "aws_dx_private_virtual_interface" "aws_virtual_interface" {
+  depends_on = [
+    module.metal-2-fabric-connection,
+    aws_dx_gateway.aws_gateway,
+  ]
+  connection_id    = data.aws_dx_connection.aws_connection.id
+  name             = var.aws_vif_name
+  vlan             = data.aws_dx_connection.aws_connection.vlan_id
+  address_family   = var.aws_vif_address_family
+  bgp_asn          = var.aws_vif_bgp_asn
+  amazon_address   = var.aws_vif_amazon_address
+  customer_address = var.aws_vif_customer_address
+  bgp_auth_key     = var.aws_vif_bgp_auth_key
+  dx_gateway_id   = aws_dx_gateway.aws_gateway.id
 }
 ```
 <!-- End Example Usage -->
