@@ -3,8 +3,8 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-module "create_port_2_alibaba_connection" {
-  source = "../../modules/port-connection"
+module "port_2_aws_connection" {
+  source = "equinix/fabric/equinix//modules/port-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -12,11 +12,11 @@ module "create_port_2_alibaba_connection" {
   notifications_emails  = var.notifications_emails
   bandwidth             = var.bandwidth
   purchase_order_number = var.purchase_order_number
-  project_id            = var.project_id
+  additional_info       = var.additional_info
 
   # A-side
-  aside_port_name = var.aside_port_name
-  aside_vlan_tag  = var.aside_vlan_tag
+  aside_port_name      = var.aside_port_name
+  aside_vlan_tag       = var.aside_vlan_tag
 
   # Z-side
   zside_ap_type               = var.zside_ap_type
