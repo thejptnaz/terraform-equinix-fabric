@@ -9,8 +9,8 @@ provider "aws" {
   region     = var.zside_seller_region
 }
 resource "random_string" "random" {
-  length  = 3
-  special = false
+  length  = 5
+  special = true
 }
 locals {
   connection_name  = format("%s-%s", var.connection_name, random_string.random.result)
