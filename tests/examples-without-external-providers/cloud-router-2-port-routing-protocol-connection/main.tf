@@ -4,7 +4,7 @@ provider "equinix" {
 }
 
 module "cloud_router_port_connection" {
-  source = "equinix/fabric/equinix//modules/cloud-router-connection"
+  source = "../../../modules/cloud-router-connection"
 
   connection_name       = var.connection_name
   connection_type       = var.connection_type
@@ -25,7 +25,7 @@ module "cloud_router_port_connection" {
 
 module "routing_protocols" {
   depends_on = [module.cloud_router_port_connection]
-  source = "equinix/fabric/equinix//modules/routing-protocols"
+  source = "../../../modules/routing-protocols"
 
   connection_uuid = module.cloud_router_port_connection.primary_connection_id
 
