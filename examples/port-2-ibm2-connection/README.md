@@ -1,6 +1,6 @@
 # Fabric Port to Fabric IBM 2.0 Service Profile Connection
 
-This example shows how to leverage the [Fabric Port Connection Module](../../modules/port-connection/README.md)
+This example shows how to leverage the [Fabric Port Connection Module](equinix/fabric/modules/port-connection/README.md)
 to create a Fabric Connection from a Fabric Port to Fabric IBM 2.0 Service Profile.
 
 It leverages the Equinix Terraform Provider, and the Fabric Port Connection
@@ -9,7 +9,7 @@ you see used in this example it will allow you to create a more specific use cas
 
 See example usage below for details on how to use this example.
 
-<!-- Begin Example Usage (Do not edit contents) -->
+<!-- BEGIN_TF_DOCS -->
 ## Equinix Fabric Developer Documentation
 
 To see the documentation for the APIs that the Fabric Terraform Provider is built on
@@ -25,7 +25,7 @@ in the upper right of this page and be sure to include at a minimum the required
 
 *Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
 
-To provision this example directly, 
+To provision this example directly,
 you should clone the github repository for this module and run terraform within this directory:
 
 ```bash
@@ -41,7 +41,6 @@ To use this example of the module in your own terraform configuration include th
 
 terraform.tfvars (Replace these values with your own):
 ```hcl
-
 equinix_client_id      = "MyEquinixClientId"
 equinix_client_secret  = "MyEquinixClientSecret"
 
@@ -68,9 +67,9 @@ ibm_classic_api_key         = "<IBM_Classic_API_Key"
 ibm_resource_group_name     = "Equinix"
 ibm_gateway_action          = "create_gateway_approve"
 ```
-versions.tf:
-```hcl
 
+versions.tf
+```hcl
 terraform {
   required_version = ">= 1.5.4"
   required_providers {
@@ -85,9 +84,9 @@ terraform {
   }
 }
 ```
-variables.tf:
-```hcl
 
+variables.tf
+ ```hcl
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
@@ -206,9 +205,9 @@ variable "ibm_gateway_metered" {
   default     = true
 }
 ```
-outputs.tf:
-```hcl
 
+outputs.tf
+```hcl
 output "ibm2_connection_id" {
   value = module.create_port_2_ibm2_connection.primary_connection_id
 }
@@ -216,9 +215,9 @@ output "IBM_Gateway_Action_Id" {
   value = ibm_dl_gateway_action.test_dl_gateway_action.id
 }
 ```
-main.tf:
-```hcl
 
+main.tf
+```hcl
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
@@ -277,8 +276,7 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
   resource_group  = data.ibm_resource_group.rg.id
 }
 ```
-<!-- End Example Usage -->
-<!-- BEGIN_TF_DOCS -->
+
 ## Requirements
 
 | Name | Version |
@@ -298,7 +296,7 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_port_2_ibm2_connection"></a> [create\_port\_2\_ibm2\_connection](#module\_create\_port\_2\_ibm2\_connection) | ../../modules/port-connection | n/a |
+| <a name="module_create_port_2_ibm2_connection"></a> [create\_port\_2\_ibm2\_connection](#module\_create\_port\_2\_ibm2\_connection) | equinix/fabric/equinix//modules/port-connection | n/a |
 
 ## Resources
 
@@ -313,7 +311,9 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_info"></a> [additional\_info](#input\_additional\_info) | Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values. | `list(object({ key = string, value = string }))` | `[]` | no |
 | <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name | `string` | n/a | yes |
+| <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
 | <a name="input_aside_vlan_tag"></a> [aside\_vlan\_tag](#input\_aside\_vlan\_tag) | Vlan Tag information, outer vlanSTag for QINQ connections | `string` | n/a | yes |
 | <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
@@ -324,21 +324,19 @@ resource "ibm_dl_gateway_action" "test_dl_gateway_action" {
 | <a name="input_ibm_classic_username"></a> [ibm\_classic\_username](#input\_ibm\_classic\_username) | The IBM Cloud Classic Infrastructure user name | `string` | n/a | yes |
 | <a name="input_ibm_cloud_api_key"></a> [ibm\_cloud\_api\_key](#input\_ibm\_cloud\_api\_key) | The IBM Cloud platform API key | `string` | n/a | yes |
 | <a name="input_ibm_gateway_action"></a> [ibm\_gateway\_action](#input\_ibm\_gateway\_action) | IBM Approve/reject a pending change request | `string` | n/a | yes |
+| <a name="input_ibm_gateway_global"></a> [ibm\_gateway\_global](#input\_ibm\_gateway\_global) | Required-Gateway with global routing as true can connect networks outside your associated region | `bool` | `true` | no |
+| <a name="input_ibm_gateway_metered"></a> [ibm\_gateway\_metered](#input\_ibm\_gateway\_metered) | Metered billing option. If set true gateway usage is billed per GB | `bool` | `true` | no |
 | <a name="input_ibm_resource_group_name"></a> [ibm\_resource\_group\_name](#input\_ibm\_resource\_group\_name) | The IBM Resource Group Name | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
+| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
+| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Subscriber-assigned project ID | `string` | `""` | no |
+| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_zside_ap_authentication_key"></a> [zside\_ap\_authentication\_key](#input\_zside\_ap\_authentication\_key) | Authentication key for provider based connections | `string` | n/a | yes |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | n/a | yes |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
 | <a name="input_zside_seller_region"></a> [zside\_seller\_region](#input\_zside\_seller\_region) | Access point seller region | `string` | n/a | yes |
 | <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
-| <a name="input_additional_info"></a> [additional\_info](#input\_additional\_info) | Additional info parameters. It's a list of maps containing 'key' and 'value' keys with their corresponding values. | `list(object({ key = string, value = string }))` | `[]` | no |
-| <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
-| <a name="input_ibm_gateway_global"></a> [ibm\_gateway\_global](#input\_ibm\_gateway\_global) | Required-Gateway with global routing as true can connect networks outside your associated region | `bool` | `true` | no |
-| <a name="input_ibm_gateway_metered"></a> [ibm\_gateway\_metered](#input\_ibm\_gateway\_metered) | Metered billing option. If set true gateway usage is billed per GB | `bool` | `true` | no |
-| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
-| <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Subscriber-assigned project ID | `string` | `""` | no |
-| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 
 ## Outputs
 

@@ -1,6 +1,6 @@
 # Fabric Cloud Router to Virtual Device Connection
 
-This example shows how to leverage the [Fabric Cloud Router Connection Module](../../modules/cloud-router-connection/README.md)
+This example shows how to leverage the [Fabric Cloud Router Connection Module](equinix/fabric/modules/cloud-router-connection/README.md)
 to create a Fabric Connection from a Fabric Cloud Router to Virtual Device.
 
 It leverages the Equinix Terraform Provider and the Fabric Cloud Router Connection
@@ -9,7 +9,7 @@ you see used in this example it will allow you to create a more specific use cas
 
 See example usage below for details on how to use this example.
 
-<!-- Begin Example Usage (Do not edit contents) -->
+<!-- BEGIN_TF_DOCS -->
 ## Equinix Fabric Developer Documentation
 
 To see the documentation for the APIs that the Fabric Terraform Provider is built on
@@ -25,7 +25,7 @@ in the upper right of this page and be sure to include at a minimum the required
 
 *Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
 
-To provision this example directly, 
+To provision this example directly,
 you should clone the github repository for this module and run terraform within this directory:
 
 ```bash
@@ -41,7 +41,6 @@ To use this example of the module in your own terraform configuration include th
 
 terraform.tfvars (Replace these values with your own):
 ```hcl
-
 equinix_client_id     = "<MyEquinixClientId>"
 equinix_client_secret = "<MyEquinixSecret>"
 
@@ -60,9 +59,9 @@ zside_vd_uuid         = "<Virtual Device UUID>"
 zside_interface_type  = "NETWORK"
 zside_interface_id    = 5
 ```
-versions.tf:
-```hcl
 
+versions.tf
+```hcl
 terraform {
   required_version = ">= 1.5.4"
   required_providers {
@@ -73,9 +72,9 @@ terraform {
   }
 }
 ```
-variables.tf:
-```hcl
 
+variables.tf
+ ```hcl
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
@@ -140,16 +139,16 @@ variable "zside_interface_id" {
   default     = null
 }
 ```
-outputs.tf:
-```hcl
 
+outputs.tf
+```hcl
 output "FCR_VD_Connection" {
   value = module.cloud_router_virtual_device_connection.primary_connection_id
 }
 ```
-main.tf:
-```hcl
 
+main.tf
+```hcl
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
@@ -176,8 +175,7 @@ module "cloud_router_virtual_device_connection" {
   zside_interface_id    = var.zside_interface_id
 }
 ```
-<!-- End Example Usage -->
-<!-- BEGIN_TF_DOCS -->
+
 ## Requirements
 
 | Name | Version |
@@ -193,7 +191,7 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cloud_router_virtual_device_connection"></a> [cloud\_router\_virtual\_device\_connection](#module\_cloud\_router\_virtual\_device\_connection) | ../../modules/cloud-router-connection | n/a |
+| <a name="module_cloud_router_virtual_device_connection"></a> [cloud\_router\_virtual\_device\_connection](#module\_cloud\_router\_virtual\_device\_connection) | equinix/fabric/equinix//modules/cloud-router-connection | n/a |
 
 ## Resources
 
@@ -210,13 +208,13 @@ No resources.
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
-| <a name="input_zside_vd_type"></a> [zside\_vd\_type](#input\_zside\_vd\_type) | Virtual Device type - EDGE | `string` | n/a | yes |
-| <a name="input_zside_vd_uuid"></a> [zside\_vd\_uuid](#input\_zside\_vd\_uuid) | Virtual Device UUID | `string` | n/a | yes |
 | <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | `"VD"` | no |
 | <a name="input_zside_interface_id"></a> [zside\_interface\_id](#input\_zside\_interface\_id) | Interface Id | `number` | `null` | no |
 | <a name="input_zside_interface_type"></a> [zside\_interface\_type](#input\_zside\_interface\_type) | Virtual Device Interface type - CLOUD, NETWORK | `string` | `""` | no |
+| <a name="input_zside_vd_type"></a> [zside\_vd\_type](#input\_zside\_vd\_type) | Virtual Device type - EDGE | `string` | n/a | yes |
+| <a name="input_zside_vd_uuid"></a> [zside\_vd\_uuid](#input\_zside\_vd\_uuid) | Virtual Device UUID | `string` | n/a | yes |
 
 ## Outputs
 

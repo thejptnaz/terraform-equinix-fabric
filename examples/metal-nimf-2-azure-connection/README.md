@@ -1,6 +1,6 @@
 # Metal to Azure Connection Example
 
-This example shows how to leverage the [Metal Connection Module](../../modules/metalconnection/README.md)
+This example shows how to leverage the [Metal Connection Module](equinix/fabric/modules/metalconnection/README.md)
 to create a Fabric Connection from Equinix Metal to Azure.
 
 It leverages the Equinix Terraform Provider and the Metal Connection
@@ -9,7 +9,7 @@ you see used in this example it will allow you to create a more specific use cas
 
 See example usage below for details on how to use this example.
 
-<!-- Begin Example Usage (Do not edit contents) -->
+<!-- BEGIN_TF_DOCS -->
 ## Equinix Fabric Developer Documentation
 
 To see the documentation for the APIs that the Fabric Terraform Provider is built on
@@ -25,7 +25,7 @@ in the upper right of this page and be sure to include at a minimum the required
 
 *Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
 
-To provision this example directly, 
+To provision this example directly,
 you should clone the github repository for this module and run terraform within this directory:
 
 ```bash
@@ -41,7 +41,6 @@ To use this example of the module in your own terraform configuration include th
 
 terraform.tfvars (Replace these values with your own):
 ```hcl
-
 equinix_client_id      = "<MyEquinixClientId>"
 equinix_client_secret  = "<MyEquinixSecret>"
 metal_auth_token       = "<Metal_Auth_Token>"
@@ -80,9 +79,9 @@ azure_tier                  = "Standard"
 azure_family                = "UnlimitedData"
 azure_environment           = "PROD"
 ```
-versions.tf:
-```hcl
 
+versions.tf
+```hcl
 terraform {
   required_version = ">= 1.5.4"
   required_providers {
@@ -97,9 +96,9 @@ terraform {
   }
 }
 ```
-variables.tf:
-```hcl
 
+variables.tf
+ ```hcl
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
@@ -248,9 +247,9 @@ variable "azure_environment" {
   type        = string
 }
 ```
-outputs.tf:
-```hcl
 
+outputs.tf
+```hcl
 output "metal_vlan_id" {
   value = equinix_metal_vlan.vlan-server.id
 }
@@ -267,9 +266,9 @@ output "metal_azure_connection_id" {
   value = module.metal_2_azure_connection.primary_connection_id
 }
 ```
-main.tf:
-```hcl
 
+main.tf
+```hcl
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
@@ -341,9 +340,7 @@ module "metal_2_azure_connection" {
   zside_fabric_sp_name        = var.zside_fabric_sp_name
 }
 ```
-<!-- End Example Usage -->
 
-<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -356,14 +353,14 @@ module "metal_2_azure_connection" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.84.0 |
-| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | >= 1.34.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 3.112.0 |
+| <a name="provider_equinix"></a> [equinix](#provider\_equinix) | 2.2.0 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_metal_2_azure_connection"></a> [metal\_2\_azure\_connection](#module\_metal\_2\_azure\_connection) | ../../modules/metal-connection | n/a |
+| <a name="module_metal_2_azure_connection"></a> [metal\_2\_azure\_connection](#module\_metal\_2\_azure\_connection) | equinix/fabric/equinix//modules/metal-connection | n/a |
 
 ## Resources
 
@@ -383,8 +380,10 @@ module "metal_2_azure_connection" {
 | <a name="input_azure_environment"></a> [azure\_environment](#input\_azure\_environment) | The Cloud environment which should be used for Service Key | `string` | n/a | yes |
 | <a name="input_azure_family"></a> [azure\_family](#input\_azure\_family) | The billing mode for bandwidth. Possible values are MeteredData or UnlimitedData | `string` | n/a | yes |
 | <a name="input_azure_location"></a> [azure\_location](#input\_azure\_location) | The location of Azure service provider(resource) | `string` | n/a | yes |
+| <a name="input_azure_peering_location"></a> [azure\_peering\_location](#input\_azure\_peering\_location) | The name of the peering location (not the Azure resource location) | `string` | `""` | no |
 | <a name="input_azure_resource_name"></a> [azure\_resource\_name](#input\_azure\_resource\_name) | The name of Azure Resource | `string` | n/a | yes |
 | <a name="input_azure_service_key_name"></a> [azure\_service\_key\_name](#input\_azure\_service\_key\_name) | Azure Service Key Name | `string` | n/a | yes |
+| <a name="input_azure_service_provider_name"></a> [azure\_service\_provider\_name](#input\_azure\_service\_provider\_name) | The name of Azure Service Provider | `string` | `""` | no |
 | <a name="input_azure_subscription_id"></a> [azure\_subscription\_id](#input\_azure\_subscription\_id) | Azure Subscription id | `string` | n/a | yes |
 | <a name="input_azure_tenant_id"></a> [azure\_tenant\_id](#input\_azure\_tenant\_id) | Azure Tenant id | `string` | n/a | yes |
 | <a name="input_azure_tier"></a> [azure\_tier](#input\_azure\_tier) | The Service tier. Possible values are Basic, Local, Standard or Premium | `string` | n/a | yes |
@@ -402,15 +401,13 @@ module "metal_2_azure_connection" {
 | <a name="input_metal_contact_email"></a> [metal\_contact\_email](#input\_metal\_contact\_email) | Preferred email used for communication | `string` | n/a | yes |
 | <a name="input_metal_project_id"></a> [metal\_project\_id](#input\_metal\_project\_id) | Metal Project Name | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
+| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Equinix Fabric Project Id | `string` | n/a | yes |
+| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | n/a | yes |
 | <a name="input_zside_fabric_sp_name"></a> [zside\_fabric\_sp\_name](#input\_zside\_fabric\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
-| <a name="input_azure_peering_location"></a> [azure\_peering\_location](#input\_azure\_peering\_location) | The name of the peering location (not the Azure resource location) | `string` | `""` | no |
-| <a name="input_azure_service_provider_name"></a> [azure\_service\_provider\_name](#input\_azure\_service\_provider\_name) | The name of Azure Service Provider | `string` | `""` | no |
-| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
-| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_zside_peering_type"></a> [zside\_peering\_type](#input\_zside\_peering\_type) | Access point peering type - PRIVATE, MICROSOFT, PUBLIC, MANUAL | `string` | `"PRIVATE"` | no |
 
 ## Outputs

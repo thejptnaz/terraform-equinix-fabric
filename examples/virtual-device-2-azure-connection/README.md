@@ -1,6 +1,6 @@
 # Fabric Virtual Device to Fabric Azure Service Profile Connection
 
-This example shows how to leverage the [Fabric Virtual Device Connection Module](../../modules/virtual-device-connection/README.md)
+This example shows how to leverage the [Fabric Virtual Device Connection Module](equinix/fabric/modules/virtual-device-connection/README.md)
 to create a Fabric Connection from a Fabric Virtual Device to Fabric Azure Service Profile.
 
 It leverages the Equinix Terraform Provider, the Azure Terraform Provider, and the Fabric Virtual Device Connection
@@ -9,7 +9,7 @@ you see used in this example it will allow you to create a more specific use cas
 
 See example usage below for details on how to use this example.
 
-<!-- Begin Example Usage (Do not edit contents) -->
+<!-- BEGIN_TF_DOCS -->
 ## Equinix Fabric Developer Documentation
 
 To see the documentation for the APIs that the Fabric Terraform Provider is built on
@@ -25,7 +25,7 @@ in the upper right of this page and be sure to include at a minimum the required
 
 *Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
 
-To provision this example directly, 
+To provision this example directly,
 you should clone the github repository for this module and run terraform within this directory:
 
 ```bash
@@ -41,7 +41,6 @@ To use this example of the module in your own terraform configuration include th
 
 terraform.tfvars (Replace these values with your own):
 ```hcl
-
 equinix_client_id      = "MyEquinixClientId"
 equinix_client_secret  = "MyEquinixSecret"
 
@@ -101,9 +100,9 @@ zside_location              = "SV"
 zside_sp_name               = "Azure ExpressRoute"
 zside_peering_type          = "PRIVATE"
 ```
-versions.tf:
-```hcl
 
+versions.tf
+```hcl
 terraform {
   required_version = ">= 1.5.2"
   required_providers {
@@ -118,9 +117,9 @@ terraform {
   }
 }
 ```
-variables.tf:
-```hcl
 
+variables.tf
+ ```hcl
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
@@ -331,9 +330,9 @@ variable "zside_peering_type" {
   type        = string
 }
 ```
-outputs.tf:
-```hcl
 
+outputs.tf
+```hcl
 output "virtual_device_id" {
   value = equinix_network_device.C8KV-SV.id
 }
@@ -341,9 +340,9 @@ output "azure_connection_id" {
   value = module.create_virtual_device_2_azure_connection.primary_connection_id
 }
 ```
-main.tf:
-```hcl
 
+main.tf
+```hcl
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
@@ -437,9 +436,7 @@ module "create_virtual_device_2_azure_connection" {
   zside_sp_name               = var.zside_sp_name
 }
 ```
-<!-- End Example Usage -->
 
-<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -459,7 +456,7 @@ module "create_virtual_device_2_azure_connection" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_virtual_device_2_azure_connection"></a> [create\_virtual\_device\_2\_azure\_connection](#module\_create\_virtual\_device\_2\_azure\_connection) | ../../modules/virtual-device-connection | n/a |
+| <a name="module_create_virtual_device_2_azure_connection"></a> [create\_virtual\_device\_2\_azure\_connection](#module\_create\_virtual\_device\_2\_azure\_connection) | equinix/fabric/equinix//modules/virtual-device-connection | n/a |
 
 ## Resources
 
@@ -474,20 +471,26 @@ module "create_virtual_device_2_azure_connection" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_aside_vd_type"></a> [aside\_vd\_type](#input\_aside\_vd\_type) | Virtual Device type - EDGE | `string` | `""` | no |
+| <a name="input_aside_vd_uuid"></a> [aside\_vd\_uuid](#input\_aside\_vd\_uuid) | Virtual Device UUID | `string` | `""` | no |
 | <a name="input_azure_client_id"></a> [azure\_client\_id](#input\_azure\_client\_id) | Azure Client id | `string` | n/a | yes |
 | <a name="input_azure_client_secret"></a> [azure\_client\_secret](#input\_azure\_client\_secret) | Azure Secret value | `string` | n/a | yes |
 | <a name="input_azure_environment"></a> [azure\_environment](#input\_azure\_environment) | The Cloud environment which should be used for Service Key | `string` | n/a | yes |
 | <a name="input_azure_family"></a> [azure\_family](#input\_azure\_family) | The billing mode for bandwidth. Possible values are MeteredData or UnlimitedData | `string` | n/a | yes |
 | <a name="input_azure_location"></a> [azure\_location](#input\_azure\_location) | The location of Azure service provider(resource) | `string` | n/a | yes |
+| <a name="input_azure_peering_location"></a> [azure\_peering\_location](#input\_azure\_peering\_location) | The name of the peering location (not the Azure resource location) | `string` | `""` | no |
 | <a name="input_azure_resource_name"></a> [azure\_resource\_name](#input\_azure\_resource\_name) | The name of Azure Resource | `string` | n/a | yes |
 | <a name="input_azure_service_key_name"></a> [azure\_service\_key\_name](#input\_azure\_service\_key\_name) | Azure Service Key Name | `string` | n/a | yes |
+| <a name="input_azure_service_provider_name"></a> [azure\_service\_provider\_name](#input\_azure\_service\_provider\_name) | The name of Azure Service Provider | `string` | `""` | no |
 | <a name="input_azure_subscription_id"></a> [azure\_subscription\_id](#input\_azure\_subscription\_id) | Azure Subscription id | `string` | n/a | yes |
 | <a name="input_azure_tenant_id"></a> [azure\_tenant\_id](#input\_azure\_tenant\_id) | Azure Tenant id | `string` | n/a | yes |
 | <a name="input_azure_tier"></a> [azure\_tier](#input\_azure\_tier) | The Service tier. Possible values are Basic, Local, Standard or Premium | `string` | n/a | yes |
+| <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | `50` | no |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
 | <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | n/a | yes |
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
+| <a name="input_ne_account_number"></a> [ne\_account\_number](#input\_ne\_account\_number) | Billing account number for a device | `string` | `0` | no |
 | <a name="input_ne_core_count"></a> [ne\_core\_count](#input\_ne\_core\_count) | Core count number | `number` | n/a | yes |
 | <a name="input_ne_hostname"></a> [ne\_hostname](#input\_ne\_hostname) | Device hostname prefix | `string` | n/a | yes |
 | <a name="input_ne_metro_code"></a> [ne\_metro\_code](#input\_ne\_metro\_code) | Device location metro code | `string` | n/a | yes |
@@ -498,9 +501,12 @@ module "create_virtual_device_2_azure_connection" {
 | <a name="input_ne_ssh_key_username"></a> [ne\_ssh\_key\_username](#input\_ne\_ssh\_key\_username) | username for ssh key | `string` | n/a | yes |
 | <a name="input_ne_term_length"></a> [ne\_term\_length](#input\_ne\_term\_length) | Term length in months | `number` | n/a | yes |
 | <a name="input_ne_type_code"></a> [ne\_type\_code](#input\_ne\_type\_code) | n/a | `string` | n/a | yes |
+| <a name="input_ne_version"></a> [ne\_version](#input\_ne\_version) | Device software version | `string` | `null` | no |
 | <a name="input_network_public_key"></a> [network\_public\_key](#input\_network\_public\_key) | The SSH public key | `string` | n/a | yes |
 | <a name="input_network_public_key_name"></a> [network\_public\_key\_name](#input\_network\_public\_key\_name) | The name of SSH key used for identification. | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
+| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
+| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_template_description"></a> [template\_description](#input\_template\_description) | ACL Template description | `string` | n/a | yes |
 | <a name="input_template_dst_port"></a> [template\_dst\_port](#input\_template\_dst\_port) | Inbound traffic destination ports | `string` | n/a | yes |
 | <a name="input_template_name"></a> [template\_name](#input\_template\_name) | ACL Template Name | `string` | n/a | yes |
@@ -512,15 +518,6 @@ module "create_virtual_device_2_azure_connection" {
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
 | <a name="input_zside_peering_type"></a> [zside\_peering\_type](#input\_zside\_peering\_type) | Zside Access Point Peering type. Available values; PRIVATE, MICROSOFT, PUBLIC, MANUAL | `string` | n/a | yes |
 | <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
-| <a name="input_aside_vd_type"></a> [aside\_vd\_type](#input\_aside\_vd\_type) | Virtual Device type - EDGE | `string` | `""` | no |
-| <a name="input_aside_vd_uuid"></a> [aside\_vd\_uuid](#input\_aside\_vd\_uuid) | Virtual Device UUID | `string` | `""` | no |
-| <a name="input_azure_peering_location"></a> [azure\_peering\_location](#input\_azure\_peering\_location) | The name of the peering location (not the Azure resource location) | `string` | `""` | no |
-| <a name="input_azure_service_provider_name"></a> [azure\_service\_provider\_name](#input\_azure\_service\_provider\_name) | The name of Azure Service Provider | `string` | `""` | no |
-| <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | `50` | no |
-| <a name="input_ne_account_number"></a> [ne\_account\_number](#input\_ne\_account\_number) | Billing account number for a device | `string` | `0` | no |
-| <a name="input_ne_version"></a> [ne\_version](#input\_ne\_version) | Device software version | `string` | `null` | no |
-| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
-| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 
 ## Outputs
 

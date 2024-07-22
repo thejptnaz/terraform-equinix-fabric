@@ -1,6 +1,6 @@
 # Fabric Cloud Router to Oracle Service Profile Connection
 
-This example shows how to leverage the [Fabric Cloud Router Connection Module](../../modules/cloud-router-connection/README.md)
+This example shows how to leverage the [Fabric Cloud Router Connection Module](equinix/fabric/modules/cloud-router-connection/README.md)
 to create a Fabric Connection from a Fabric Cloud Router to Oracle Service Profile.
 
 It leverages the Equinix Terraform Provider, and the Fabric Cloud Router Connection
@@ -9,7 +9,7 @@ you see used in this example it will allow you to create a more specific use cas
 
 See example usage below for details on how to use this example.
 
-<!-- Begin Example Usage (Do not edit contents) -->
+<!-- BEGIN_TF_DOCS -->
 ## Equinix Fabric Developer Documentation
 
 To see the documentation for the APIs that the Fabric Terraform Provider is built on
@@ -25,7 +25,7 @@ in the upper right of this page and be sure to include at a minimum the required
 
 *Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
 
-To provision this example directly, 
+To provision this example directly,
 you should clone the github repository for this module and run terraform within this directory:
 
 ```bash
@@ -41,7 +41,6 @@ To use this example of the module in your own terraform configuration include th
 
 terraform.tfvars (Replace these values with your own):
 ```hcl
-
 equinix_client_id      = "<MyEquinixClientId>"
 equinix_client_secret  = "<MyEquinixSecret>"
 
@@ -73,9 +72,9 @@ oracle_bgp_peering_ip           = "10.1.0.49/30"
 oracle_customer_asn             = "123456"
 oracle_gateway_id               = "<Oracle Gateway ID>"
 ```
-versions.tf:
-```hcl
 
+versions.tf
+```hcl
 terraform {
   required_version = ">= 1.5.4"
   required_providers {
@@ -90,9 +89,9 @@ terraform {
   }
 }
 ```
-variables.tf:
-```hcl
 
+variables.tf
+ ```hcl
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
@@ -224,16 +223,16 @@ variable "oracle_gateway_id" {
   type        = string
 }
 ```
-outputs.tf:
-```hcl
 
+outputs.tf
+```hcl
 output "oracle_connection_id" {
   value = module.cloud_router_oracle_connection.primary_connection_id
 }
 ```
-main.tf:
-```hcl
 
+main.tf
+```hcl
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
@@ -299,8 +298,7 @@ module "cloud_router_oracle_connection" {
   zside_fabric_sp_name        = var.zside_fabric_sp_name
 }
 ```
-<!-- End Example Usage -->
-<!-- BEGIN_TF_DOCS -->
+
 ## Requirements
 
 | Name | Version |
@@ -319,7 +317,7 @@ module "cloud_router_oracle_connection" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_cloud_router_oracle_connection"></a> [cloud\_router\_oracle\_connection](#module\_cloud\_router\_oracle\_connection) | ../../modules/cloud-router-connection | n/a |
+| <a name="module_cloud_router_oracle_connection"></a> [cloud\_router\_oracle\_connection](#module\_cloud\_router\_oracle\_connection) | equinix/fabric/equinix//modules/cloud-router-connection | n/a |
 
 ## Resources
 
@@ -335,9 +333,11 @@ module "cloud_router_oracle_connection" {
 | <a name="input_aside_fcr_uuid"></a> [aside\_fcr\_uuid](#input\_aside\_fcr\_uuid) | Equinix-assigned Fabric Cloud Router identifier | `string` | n/a | yes |
 | <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
+| <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | `""` | no |
 | <a name="input_equinix_client_id"></a> [equinix\_client\_id](#input\_equinix\_client\_id) | Equinix client ID (consumer key), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_equinix_client_secret"></a> [equinix\_client\_secret](#input\_equinix\_client\_secret) | Equinix client secret ID (consumer secret), obtained after registering app in the developer platform | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
+| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
 | <a name="input_oracle_bandwidth"></a> [oracle\_bandwidth](#input\_oracle\_bandwidth) | The provisioned connection bandwidth | `string` | n/a | yes |
 | <a name="input_oracle_bgp_peering_ip"></a> [oracle\_bgp\_peering\_ip](#input\_oracle\_bgp\_peering\_ip) | The BGP IPv6 address for the router on the other end of the BGP session from Oracle | `string` | n/a | yes |
 | <a name="input_oracle_compartment_id"></a> [oracle\_compartment\_id](#input\_oracle\_compartment\_id) | The OCID of the compartment | `string` | n/a | yes |
@@ -352,8 +352,6 @@ module "cloud_router_oracle_connection" {
 | <a name="input_oracle_user_ocid"></a> [oracle\_user\_ocid](#input\_oracle\_user\_ocid) | User OCID | `string` | n/a | yes |
 | <a name="input_oracle_vc_display_name"></a> [oracle\_vc\_display\_name](#input\_oracle\_vc\_display\_name) | OCI Virtual Circuit Name | `string` | n/a | yes |
 | <a name="input_oracle_vc_type"></a> [oracle\_vc\_type](#input\_oracle\_vc\_type) | The type of IP addresses used in this virtual circuit - PRIVATE | `string` | n/a | yes |
-| <a name="input_connection_type"></a> [connection\_type](#input\_connection\_type) | Defines the connection type like VG\_VC, EVPL\_VC, EPL\_VC, EC\_VC, IP\_VC, ACCESS\_EPL\_VC | `string` | `""` | no |
-| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | Subscriber-assigned project ID | `string` | `""` | no |
 | <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | `"L2_PROFILE"` | no |

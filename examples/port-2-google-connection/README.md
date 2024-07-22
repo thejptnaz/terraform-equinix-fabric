@@ -1,6 +1,6 @@
 # Fabric Port to Fabric Google Service Profile Connection
 
-This example shows how to leverage the [Fabric Port Connection Module](../../modules/port-connection/README.md)
+This example shows how to leverage the [Fabric Port Connection Module](equinix/fabric/modules/port-connection/README.md)
 to create a Fabric Connection from a Fabric Port to Fabric Google Service Profile.
 
 It leverages the Equinix Terraform Provider, and the Fabric Port Connection
@@ -9,7 +9,7 @@ you see used in this example it will allow you to create a more specific use cas
 
 See example usage below for details on how to use this example.
 
-<!-- Begin Example Usage (Do not edit contents) -->
+<!-- BEGIN_TF_DOCS -->
 ## Equinix Fabric Developer Documentation
 
 To see the documentation for the APIs that the Fabric Terraform Provider is built on
@@ -25,7 +25,7 @@ in the upper right of this page and be sure to include at a minimum the required
 
 *Note:* This example creates resources which cost money. Run 'terraform destroy' when you don't need these resources.
 
-To provision this example directly, 
+To provision this example directly,
 you should clone the github repository for this module and run terraform within this directory:
 
 ```bash
@@ -41,7 +41,6 @@ To use this example of the module in your own terraform configuration include th
 
 terraform.tfvars (Replace these values with your own):
 ```hcl
-
 equinix_client_id      = "MyEquinixClientId"
 equinix_client_secret  = "MyEquinixSecret"
 
@@ -74,9 +73,9 @@ zside_location              = "SV"
 zside_seller_region         = "us-west1"
 zside_sp_name               = "Google Cloud Partner Interconnect Zone 1"
 ```
-versions.tf:
-```hcl
 
+versions.tf
+```hcl
 terraform {
   required_version = ">= 1.5.4"
   required_providers {
@@ -87,9 +86,9 @@ terraform {
   }
 }
 ```
-variables.tf:
-```hcl
 
+variables.tf
+ ```hcl
 variable "equinix_client_id" {
   description = "Equinix client ID (consumer key), obtained after registering app in the developer platform"
   type        = string
@@ -206,9 +205,9 @@ variable "zside_sp_name" {
   type        = string
 }
 ```
-outputs.tf:
-```hcl
 
+outputs.tf
+```hcl
 output "GCP_Network_Id" {
   value = google_compute_network.port-google.id
 }
@@ -222,9 +221,9 @@ output "google_connection_id" {
   value = module.create_port_2_google_connection.primary_connection_id
 }
 ```
-main.tf:
-```hcl
 
+main.tf
+```hcl
 provider "equinix" {
   client_id     = var.equinix_client_id
   client_secret = var.equinix_client_secret
@@ -284,8 +283,7 @@ module "create_port_2_google_connection" {
   zside_sp_name               = var.zside_sp_name
 }
 ```
-<!-- End Example Usage -->
-<!-- BEGIN_TF_DOCS -->
+
 ## Requirements
 
 | Name | Version |
@@ -303,7 +301,7 @@ module "create_port_2_google_connection" {
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_create_port_2_google_connection"></a> [create\_port\_2\_google\_connection](#module\_create\_port\_2\_google\_connection) | ../../modules/port-connection | n/a |
+| <a name="module_create_port_2_google_connection"></a> [create\_port\_2\_google\_connection](#module\_create\_port\_2\_google\_connection) | equinix/fabric/equinix//modules/port-connection | n/a |
 
 ## Resources
 
@@ -318,6 +316,7 @@ module "create_port_2_google_connection" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_aside_port_name"></a> [aside\_port\_name](#input\_aside\_port\_name) | Equinix A-Side Port Name | `string` | n/a | yes |
+| <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
 | <a name="input_aside_vlan_tag"></a> [aside\_vlan\_tag](#input\_aside\_vlan\_tag) | Vlan Tag information, outer vlanSTag for QINQ connections | `string` | n/a | yes |
 | <a name="input_bandwidth"></a> [bandwidth](#input\_bandwidth) | Connection bandwidth in Mbps | `number` | n/a | yes |
 | <a name="input_connection_name"></a> [connection\_name](#input\_connection\_name) | Connection name. An alpha-numeric 24 characters string which can include only hyphens and underscores | `string` | n/a | yes |
@@ -337,13 +336,12 @@ module "create_port_2_google_connection" {
 | <a name="input_google_router_name"></a> [google\_router\_name](#input\_google\_router\_name) | The Google Router Name | `string` | n/a | yes |
 | <a name="input_google_zone"></a> [google\_zone](#input\_google\_zone) | The default Google Zone to manage resources in | `string` | n/a | yes |
 | <a name="input_notifications_emails"></a> [notifications\_emails](#input\_notifications\_emails) | Array of contact emails | `list(string)` | n/a | yes |
+| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
+| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 | <a name="input_zside_ap_profile_type"></a> [zside\_ap\_profile\_type](#input\_zside\_ap\_profile\_type) | Service profile type - L2\_PROFILE, L3\_PROFILE, ECIA\_PROFILE, ECMC\_PROFILE | `string` | n/a | yes |
 | <a name="input_zside_ap_type"></a> [zside\_ap\_type](#input\_zside\_ap\_type) | Access point type - COLO, VD, VG, SP, IGW, SUBNET, GW | `string` | n/a | yes |
 | <a name="input_zside_location"></a> [zside\_location](#input\_zside\_location) | Access point metro code | `string` | n/a | yes |
 | <a name="input_zside_sp_name"></a> [zside\_sp\_name](#input\_zside\_sp\_name) | Equinix Service Profile Name | `string` | n/a | yes |
-| <a name="input_aside_vlan_inner_tag"></a> [aside\_vlan\_inner\_tag](#input\_aside\_vlan\_inner\_tag) | Vlan Inner Tag information, inner vlanCTag for QINQ connections | `string` | `""` | no |
-| <a name="input_notifications_type"></a> [notifications\_type](#input\_notifications\_type) | Notification Type - ALL is the only type currently supported | `string` | `"ALL"` | no |
-| <a name="input_purchase_order_number"></a> [purchase\_order\_number](#input\_purchase\_order\_number) | Purchase order number | `string` | `""` | no |
 
 ## Outputs
 
