@@ -5,8 +5,11 @@ resource "equinix_fabric_routing_protocol" "direct" {
   direct_ipv4 {
     equinix_iface_ip = var.direct_equinix_ipv4_ip
   }
-  direct_ipv6 {
-    equinix_iface_ip = var.direct_equinix_ipv6_ip
+  dynamic "direct_ipv6" {
+    for_each = var.direct_equinix_ipv6_ip != "" ? [1] : []
+    content {
+      equinix_iface_ip = var.direct_equinix_ipv6_ip
+    }
   }
 }
 
@@ -26,8 +29,10 @@ resource "equinix_fabric_routing_protocol" "bgp" {
     enabled          = var.bgp_enabled_ipv4
     customer_peer_ip = var.bgp_customer_peer_ipv4
   }
-  bgp_ipv6 {
-    enabled          = var.bgp_enabled_ipv6
-    customer_peer_ip = var.bgp_customer_peer_ipv6
+  dynamic "bgp_ipv6" {
+    for_each = var.bgp_customer_peer_ipv6 != "" ? [1] : []
+    content {
+      customer_peer_ip = var.bgp_customer_peer_ipv6
+    }
   }
 }
