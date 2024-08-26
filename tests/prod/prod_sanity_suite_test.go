@@ -327,8 +327,21 @@ func TestVirtualDevice2PortCreateConnection_DIGP(t *testing.T) {
 	terraform.Apply(t, terraformOptions)
 }
 
-func TestCloudRouter2VirtualDeviceCreateConnection_DIGP(t *testing.T) {
+func TestVirtualDevice2AWSCreateConnection_DIGP(t *testing.T) {
 
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		TerraformDir: "../../tests/examples-without-external-providers/virtual-device-2-aws-connection",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+	t.Parallel()
+
+	terraform.InitAndApply(t, terraformOptions)
+	output := terraform.Output(t, terraformOptions, "aws_connection_id")
+	assert.NotNil(t, output)
+}
+
+func TestCloudRouter2VirtualDeviceCreateConnection_DIGP(t *testing.T) {
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		TerraformDir: "../../tests/examples-without-external-providers/cloud-router-2-virtual-device-connection",
 	})
