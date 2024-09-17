@@ -36,6 +36,6 @@ resource "equinix_fabric_cloud_router" "create_fcr_marketplace_subscription"{
   }
   marketplace_subscription{
     type = var.marketplace_subscription_type
-    uuid = data.equinix_fabric_market_place_subscription.test.uuid
+    uuid = data.equinix_fabric_market_place_subscription.subscription.uuid
   }
 }
