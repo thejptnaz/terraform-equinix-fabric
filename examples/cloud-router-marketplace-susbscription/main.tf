@@ -3,19 +3,19 @@ provider "equinix" {
   client_secret = var.equinix_client_secret
 }
 
-data "equinix_fabric_market_place_subscription" "test" {
+data "equinix_fabric_market_place_subscription" "subscription" {
   uuid = var.marketplace_subscription_uuid
 }
 
 locals {
   entitlement = flatten([
-    for entitlement in data.equinix_fabric_market_place_subscription.test.entitlements : [
+    for entitlement in data.equinix_fabric_market_place_subscription.subscription.entitlements : [
       for asset in entitlement.asset : asset.package
     ]
   ])
 }
 
-resource "equinix_fabric_cloud_router" "test"{
+resource "equinix_fabric_cloud_router" "create_fcr_marketplace_subscription"{
   name = var.fcr_name
   type = var.fcr_type
   notifications{
