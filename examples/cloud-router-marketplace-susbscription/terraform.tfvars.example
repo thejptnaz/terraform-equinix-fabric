@@ -1,0 +1,14 @@
+equinix_client_id     = "<MyEquinixClientId>"
+equinix_client_secret = "<MyEquinixSecret>"
+
+fcr_location                  = "SV"
+fcr_name                      = "terra_fcr_marketplace"
+fcr_package                   = "ADVANCED"
+fcr_type                      = "XF_ROUTER"
+notifications_emails          = ["diginpanthers@gmail.com"]
+notifications_type            = "ALL"
+project_id                    = "<Project_Id>"
+purchase_order_number         = "1-323292"
+
+marketplace_subscription_type = "AWS_MARKETPLACE_SUBSCRIPTION",
+marketplace_subscription_uuid = "<Marketplace_Subscription_Id>"
